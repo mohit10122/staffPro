@@ -1,0 +1,38 @@
+.layout-container {
+  display: flex;
+  flex-direction: column;
+   min-height: 100vh;    
+  /* overflow: hidden;  */
+}
+html, body, #root {
+  margin: 0;
+
+}
+
+.layout-body {
+  display: flex;
+  flex: 1;
+  width: 100%;
+}
+
+.layout-content {
+  margin-top: 6rem;
+  margin-left: 11rem;
+  margin-bottom: 10px;
+  flex: 1;
+  padding: 0;
+  box-sizing: border-box;
+  width:88%;
+   /* height: calc(100vh - 6rem);
+  overflow-y: auto;  
+  overflow-x: auto; */
+}
+
+.page-title {
+
+  margin-left: 7%;
+  color: #1e293b;
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}

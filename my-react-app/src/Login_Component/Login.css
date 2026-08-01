@@ -1,0 +1,221 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #0f172a;
+}
+
+.loginContainer {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  position: relative; 
+}
+
+.imageContainer {
+  flex: 2; 
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  position: relative;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.imageContainer img.brand-logo, 
+.imageContainer .logo {
+  position: absolute;
+  top: 2.5rem;
+  left: 3rem;
+  background: #ffffff;
+  padding: 0.5rem 1.2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  font-weight: 800;
+  font-size: 1.25rem;
+  color: #2563eb;
+}
+
+/* Main illustration/photo styling */
+.imageContainer img:not(.brand-logo) {
+  max-width: 90%;
+  max-height: 65vh;
+  object-fit: cover;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.layout-container:has(.loginContainer) .layout-content,
+.layout-content:has(.loginContainer) {
+  margin: 0 !important;
+  margin-top: 0 !important;
+  margin-left: 0 !important;
+  width: 100% !important;
+}
+
+.formContainer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 14%; 
+  background-color: #ffffff;
+  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.02);
+  z-index: 2;
+}
+
+.formContainer h3 {
+  font-size: 2rem;
+  color: #0f172a;
+  margin-bottom: 0.4rem;
+  margin-top: 0;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.formContainer h5 {
+  font-size: 0.95rem;
+  color: #64748b;
+  font-weight: 400;
+  margin-bottom: 2.2rem;
+  margin-top: 0;
+}
+
+.email, .password {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.25rem;
+}
+
+label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.2px;
+}
+
+input {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  font-size: 0.95rem;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 10px;
+  outline: none;
+  background-color: #f8fafc;
+  color: #1e293b;
+  transition: all 0.25s ease-in-out;
+}
+
+input:focus {
+  border-color: #2563eb; 
+  background-color: #ffffff;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+}
+
+input::placeholder {
+  color: #94a3b8;
+}
+
+.password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-wrapper input {
+  padding-right: 3rem; 
+}
+
+.password-wrapper span {
+  position: absolute;
+  right: 1rem;
+  color: #64748b;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-size: 1.1rem;
+  transition: color 0.2s;
+}
+
+.password-wrapper span:hover {
+  color: #2563eb;
+}
+
+.formContainer > div > p {
+  text-align: right;
+  font-size: 0.85rem;
+  color: #2563eb;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: -0.2rem;
+  margin-bottom: 1.5rem;
+}
+
+.formContainer > div > p:hover {
+  text-decoration: underline;
+}
+
+.login_button button {
+  width: 100%;
+  padding: 0.9rem;
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); 
+  color: white;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+  margin-bottom: 1rem;
+}
+
+.login_button button:hover {
+  background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 15px rgba(37, 99, 235, 0.35);
+}
+
+.new_account button {
+  width: 100%;
+  padding: 0.9rem;
+  background-color: #ffffff;
+  color: #059669;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border: 1.5px solid #10b981;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.new_account button:hover {
+  background-color: #ecfdf5;
+  transform: translateY(-1px);
+}
+
+@media (max-width: 768px) {
+  .loginContainer {
+    flex-direction: column;
+    height: auto;
+    overflow-y: auto;
+  }
+  
+  .imageContainer {
+    display: none; 
+  }
+  
+  .formContainer {
+    padding: 3rem 1.5rem;
+    width: 100%;
+    min-height: 100vh;
+  }
+}

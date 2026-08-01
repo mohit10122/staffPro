@@ -1,0 +1,124 @@
+.dashboardContainer {
+  padding: 0rem 2.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: 'Inter', sans-serif;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.stat-card {
+  padding: 1.5rem 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  border-left: 6px solid transparent;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.stat-card h5 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.stat-card p {
+  margin: 0;
+  font-size: 2.2rem;
+  font-weight: 800;
+}
+
+.TotalStaffs {
+  background-color: #eff6ff;
+  border-left-color: #3b82f6;
+}
+
+.TotalStaffs h5 {
+  color: #1e40af;
+}
+
+.TotalStaffs p {
+  color: #1d4ed8;
+}
+
+.TotalDepartment {
+  background-color: #f5f3ff;
+  border-left-color: #8b5cf6;
+}
+
+.TotalDepartment h5 {
+  color: #5b21b6;
+}
+
+.TotalDepartment p {
+  color: #6d28d9;
+}
+
+.NewJoiners {
+  background-color: #ecfdf5;
+  border-left-color: #10b981;
+}
+
+.NewJoiners h5 {
+  color: #065f46;
+}
+
+.NewJoiners p {
+  color: #047857;
+}
+
+.table-container {
+  background-color: #ffffff;
+  padding: 0;
+  border-radius: 12px;
+  box-shadow: 0 6px 10px -2px rgba(0, 0, 0, 0.1);
+  border: 1px solid #374151;
+  overflow: hidden;
+}
+
+.table-container h3 {
+  margin: 0;
+  padding: 1.5rem 2rem;
+  background-color: #374151;
+  color: #f9fafb !important;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+th {
+  background-color: #4b5563;
+  padding: 1rem 2rem;
+  color: #f3f4f6;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+td {
+  padding: 1rem 2rem;
+  color: #334155;
+  font-weight: 500;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+tr:hover td {
+  background-color: #f1f5f9;
+  cursor: pointer;
+}

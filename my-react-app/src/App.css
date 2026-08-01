@@ -1,0 +1,139 @@
+:root {
+  --bg-primary: #f8fafc;
+  --text-main: #1e293b;
+  --card-bg: #ffffff;
+  --table-header-bg: #1e293b;
+  --table-header-text: #ffffff;
+  --table-row-hover: #f1f5f9;
+  --border-color: #e2e8f0;
+}
+
+[data-theme="dark"] {
+  --bg-primary: #0f172a;
+  --text-main: #f1f5f1;
+  --card-bg: #1e293b;
+  --table-header-bg: #1e293b;
+  --table-header-text: #38bdf8;
+  --table-row-hover: #273548;
+  --border-color: #334155;
+}
+
+body, html, #root {
+  background-color: var(--bg-primary) !important;
+  color: var(--text-main) !important;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  min-height: 100vh;
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+h1, h2, h3, .profile-title, .dashboard-title, .page-title {
+  color: var(--text-main) !important;
+}
+
+[data-theme="dark"] h1, 
+[data-theme="dark"] h2, 
+[data-theme="dark"] h3, 
+[data-theme="dark"] .profile-title, 
+[data-theme="dark"] .dashboard-title {
+  color: #ffffff !important;
+}
+
+.App {
+  background-color: var(--bg-primary);
+  color: var(--text-main);
+  min-height: 100vh;
+}
+
+.staff-table {
+  background-color: var(--card-bg);
+  color: var(--text-main) !important;
+  border-color: var(--border-color) !important;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  background-color: var(--table-header-bg) !important;
+  color: var(--table-header-text) !important;
+  padding: 14px !important;
+  text-align: left !important;
+  font-weight: 700 !important;
+  border-bottom: 2px solid #475569 !important;
+}
+
+td {
+  color: var(--text-main) !important;
+  border-bottom: 1px solid var(--border-color) !important;
+  background-color: transparent;
+   padding: 12px; 
+}.staff-table td, 
+table td {
+  border-bottom: 1px solid #94a3b8 !important; /* Yaha color dark kar diya hai taaki saaf dikhe */
+}
+
+.staff-table th, 
+table th {
+  border-bottom: 2px solid #64748b !important;
+}
+
+
+tr:hover {
+  background-color: var(--table-row-hover) !important;
+}
+
+[data-theme="dark"] tr:hover {
+  background-color: #334155 !important;
+}
+
+[data-theme="dark"] tr:hover td {
+  color: #ffffff !important;
+  background-color: transparent !important;
+}
+
+.card, .profile-card, .profile-container div, .info-box {
+  background-color: var(--card-bg) !important;
+  color: var(--text-main) !important;
+  border-color: var(--border-color) !important;
+}
+
+[data-theme="dark"] .profile-card *, [data-theme="dark"] .card * {
+  color: #f1f5f9 !important;
+}
+
+input::placeholder {
+  color: #94a3b8;
+}
+
+[data-theme="dark"] .logoutContainer div,
+[data-theme="dark"] .modal-content,
+[data-theme="dark"] .popup-box {
+  background-color: #1e293b !important;
+  color: #f1f5f9 !important;
+  border: 1px solid #334155;
+}
+
+[data-theme="dark"] .logoutContainer h2,
+[data-theme="dark"] .logoutContainer p,
+[data-theme="dark"] .modal-content h2,
+[data-theme="dark"] .modal-content p,
+[data-theme="dark"] .modal-content label {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .profile-card img,
+[data-theme="dark"] .profile-card svg,
+[data-theme="dark"] .info-box img,
+[data-theme="dark"] .info-box svg {
+  font-size: 22px;
+  color: #4f46e5;
+  background: black;
+  padding: 10px;
+  border-radius: 10px;
+  box-sizing: content-box;
+}
+
+[data-theme="dark"] .profile-card div > div:first-child,
+[data-theme="dark"] .info-box div > div:first-child {
+  background-color: rgba(255, 255, 255, 0.12) !important;
+}
