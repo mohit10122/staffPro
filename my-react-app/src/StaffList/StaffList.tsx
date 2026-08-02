@@ -8,31 +8,33 @@ import { toast } from 'react-toastify';
 function StaffsList() {
   const navigateAddStaff = useNavigate();
   
-
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showLeavingDateModal, setShowLeavingDateModal] = useState(false);
   const [deleteId, setDeleteId] = useState<number | null>(null);
   const [deleteName, setDeleteName] = useState<String | null>(null);
   const [deleteDepartment, setDeleteDepartment] = useState<String | null>(null);
   const [leavingDate, setLeavingDate] = useState('');
-  const [staffid, setStaffid] = useState(0);
+  
   const [Staffdata, setData] = useState<any[] | null>(null);
   const [loading, setLoading] = useState(true);
-
 
   const [showReactivateModal, setShowReactivateModal] = useState(false);
   const [reactivateId, setReactivateId] = useState<number | null>(null);
   const [reactivateName, setReactivateName] = useState<String | null>(null);
   const [reactivateDepartment, setReactivateDepartment] = useState<String | null>(null);
-  const [SearchStaff , setSearchStaff]=useState("");
+  
+  const [SearchStaff, setSearchStaff] = useState("");
+
+  const [selectedStaff, setSelectedStaff] = useState<any | null>(null);
+
   const department = localStorage.getItem("department");
   const staffId = localStorage.getItem("staffid");
-    const formatSalary = (amount: number) => {
-      if (amount === null || amount === undefined) return "";
-      const formattedNumber = Number(amount).toLocaleString('en-IN', { maximumFractionDigits: 2 });
-    
-      return `₹${formattedNumber} `;
-   };
+
+  const formatSalary = (amount: number) => {
+    if (amount === null || amount === undefined) return "";
+    const formattedNumber = Number(amount).toLocaleString('en-IN', { maximumFractionDigits: 2 });
+    return `₹${formattedNumber} `;
+  };
 
   const fetchStaffData = () => {
     fetch('http://localhost:8080/Api/Staff/getDetail', {
@@ -46,16 +48,14 @@ function StaffsList() {
       })
     })
     .then(response => response.json())
-    .then((data : any[] )=> {
-      setData(data );
+    .then((data: any[]) => {
+      setData(data);
       setLoading(false);
       const loggedInStaff = data.find(staff => String(staff.StaffID) === String(staffId));
-        if (loggedInStaff && loggedInStaff.Department) {
-          localStorage.setItem("department", loggedInStaff.Department);
-        }
-    
- 
-  })
+      if (loggedInStaff && loggedInStaff.Department) {
+        localStorage.setItem("department", loggedInStaff.Department);
+      }
+    })
     .catch(error => {
       console.error("API Error:", error);
       setLoading(false);
@@ -65,7 +65,8 @@ function StaffsList() {
   useEffect(() => {
     fetchStaffData();
   }, []);
-const filteredStaff = Staffdata ? Staffdata.filter((staff) => {
+
+  const filteredStaff = Staffdata ? Staffdata.filter((staff) => {
     const query = SearchStaff.toLowerCase();
     return (
       staff.StaffName?.toLowerCase().includes(query) ||
@@ -74,6 +75,7 @@ const filteredStaff = Staffdata ? Staffdata.filter((staff) => {
       staff.Department?.toLowerCase().includes(query) 
     );
   }) : [];
+
   const handleDeleteInit = (id: number, name: String, department: String) => {
     setDeleteId(id);
     setDeleteName(name);
@@ -129,7 +131,6 @@ const filteredStaff = Staffdata ? Staffdata.filter((staff) => {
     setShowReactivateModal(true);
   };
 
-
   const handleFinalReactivate = () => {
     fetch('http://localhost:8080/Api/Staff/deleteStaff', { 
       method: 'Delete', 
@@ -143,7 +144,7 @@ const filteredStaff = Staffdata ? Staffdata.filter((staff) => {
       })
     })
     .then(response => response.json())
-    .then(data => {
+    .then(() => {
       setShowReactivateModal(false);
       setReactivateId(null);
       fetchStaffData(); 
@@ -173,21 +174,24 @@ const filteredStaff = Staffdata ? Staffdata.filter((staff) => {
     setShowLeavingDateModal(false);
     setDeleteId(null);
     setLeavingDate('');
-    
-   
     setShowReactivateModal(false);
     setReactivateId(null);
+    setSelectedStaff(null);
   };
 
   if (loading) return <h2>Loading Staff Data...</h2>;
 
   return (
     <div className="Staffs-container">
-   
       <div className="search-section">
         <div className="search-wrapper">
-          <input type="text" placeholder="Search Staff..." className="search-input" value={SearchStaff}
-    onChange={(e) => setSearchStaff(e.target.value)}/>
+          <input 
+            type="text" 
+            placeholder="Search Staff..." 
+            className="search-input" 
+            value={SearchStaff}
+            onChange={(e) => setSearchStaff(e.target.value)}
+          />
           <FaSearch size={16} color="#6b7280" className="search-icon" />
         </div>
         {department === "Admin" && (
@@ -202,74 +206,118 @@ const filteredStaff = Staffdata ? Staffdata.filter((staff) => {
         <table className='staff-table'>
           <thead>
             <tr>
-              <th>Staff ID</th><th>Name</th><th>Email</th><th>Phone</th><th>Department</th> <th>Joining Date</th>
-              {department === "Admin" && <th>Salary</th>}<th>Permanent Address</th>
+              <th>Staff ID</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Department</th> 
+              <th>Joining Date</th>
+              {department === "Admin" && <th>Salary</th>}
+              <th>Permanent Address</th>
               {department === "Admin" && <th>Last Working Day</th>}
-              {department === "Admin" && <th>Action</th>}
             </tr>
           </thead>
           <tbody>
             {filteredStaff && filteredStaff.length > 0 ? (
               filteredStaff.map((staff, index) => (
-                <tr key={staff.StaffID || index}>
-                  <td>{staff.StaffID}</td>
+                <tr 
+                  key={staff.StaffID || index} 
+                  onClick={() => {
+                    if (department === "Admin") {
+                      setSelectedStaff(staff);
+                    }
+                  }}
+                  style={{ cursor: department === "Admin" ? 'pointer' : 'default' }}
+                >
+                  <td className="staff-id-cell">
+                    <span className="icon-placeholder">
+                      {staff.Active === 'n' && (
+                        <span title="Deleted Staff" style={{ color: '#ef4444', display: 'inline-flex', alignItems: 'center' }}>
+                          <FaTrash size={11} />
+                        </span>
+                      )}
+                    </span>
+                    <span>{staff.StaffID}</span>
+                  </td>
                   <td>{staff.StaffName}</td>
                   <td>{staff.Email}</td>
                   <td>{staff.Phoneno}</td>
-                  
                   <td>{staff.Department}</td>
-                  
                   <td>{formatDate(staff.Joining_Date)}</td>
                   {department === "Admin" && <td>{formatSalary(staff.Salary)}</td>} 
-                  <td>{staff.Permanent_address}</td>
+                  <td>{formatDate(staff.Permanent_address || staff.PermanentAddress)}</td>
                   {department === "Admin" && <td>{formatDate(staff.Leaving_Date)}</td>} 
-                  {department === "Admin"   && (
-                    <td>
-                      <div className="action-buttons">
-                        
-                        {/* UPDATE BUTTON */}
-                      {staff.Active === 'y' && (
-  <button
-    className="action-btn edit-btn"
-    onClick={() => {
-      setStaffid(staff.StaffID);
-      const matchedStaff = staff;
-
-      navigateAddStaff('/updateStaff', {
-        state: {
-          isupdateStaff: true,
-          staffId: staff.StaffID,
-          matchedStaff: matchedStaff
-        }
-      });
-    }}
-  >
-    <FaEdit /> Update
-  </button>
-)}
-                        
-
-                        {( staff.Active === 'n') ? (
-                           <button className="action-btn reactivate-btn" onClick={() => handleReactivateInit(staff.StaffID, staff.StaffName, staff.Department)} style={{ backgroundColor: '#16a34a', color: 'white', display: 'flex', gap: '5px', alignItems: 'center', margin: 'auto' }}>
-                             <FaUndo /> Reactivate
-                           </button>
-                        ) : (
-                           <button className="action-btn delete-btn" onClick={() => handleDeleteInit(staff.StaffID, staff.StaffName, staff.Department)}>
-                             <FaTrash /> Delete
-                           </button>
-                        )}
-                        
-                      </div>
-                    </td>
-                  )}
                 </tr>
               ))
             ) : (
-              <tr><td colSpan={8} style={{ textAlign: "center" }}>No Data Found</td></tr>
+              <tr><td colSpan={department === "Admin" ? 9 : 7} style={{ textAlign: "center" }}>No Data Found</td></tr>
             )}
           </tbody>
         </table>
       </div>
+
+      {/* MODAL: Row Click Actions for Admin */}
+      {selectedStaff && (
+        <div className="logoutContainer" onClick={closeAllModals}>
+          <div className="logoutContainer1" onClick={(e) => e.stopPropagation()}>
+            <h2 className="logoutContainer2" style={{ color: '#2563eb' }}>Actions for {selectedStaff.StaffName}</h2>
+            <p className="logoutContainer3" style={{ marginBottom: '20px' }}>
+              Staff ID: <b>{selectedStaff.StaffID}</b> | Department: <b>{selectedStaff.Department}</b>
+            </p>
+            <div className="logoutContainer4" style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              {selectedStaff.Active === 'y' && (
+                <button
+                  className="action-btn edit-btn"
+                  style={{ padding: '10px', backgroundColor: '#2563eb', color: 'white', border: 'none', borderRadius: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', cursor: 'pointer' }}
+                  onClick={() => {
+                    const matchedStaff = selectedStaff;
+                    closeAllModals();
+                    navigateAddStaff('/updateStaff', {
+                      state: {
+                        isupdateStaff: true,
+                        staffId: selectedStaff.StaffID,
+                        matchedStaff: matchedStaff
+                      }
+                    });
+                  }}
+                >
+                  <FaEdit /> Update Staff
+                </button>
+              )}
+
+              {selectedStaff.Active === 'n' ? (
+                <button 
+                  className="action-btn reactivate-btn" 
+                  onClick={() => {
+                    const s = selectedStaff;
+                    closeAllModals();
+                    handleReactivateInit(s.StaffID, s.StaffName, s.Department);
+                  }} 
+                  style={{ padding: '10px', backgroundColor: '#16a34a', color: 'white', border: 'none', borderRadius: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', cursor: 'pointer' }}
+                >
+                  <FaUndo /> Reactivate Staff
+                </button>
+              ) : (
+                <button 
+                  className="action-dfn delete-btn" 
+                  onClick={() => {
+                    const s = selectedStaff;
+                    closeAllModals();
+                    handleDeleteInit(s.StaffID, s.StaffName, s.Department);
+                  }}
+                  style={{ padding: '10px', backgroundColor: '#ef4444', color: 'white', border: 'none', borderRadius: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', cursor: 'pointer' }}
+                >
+                  <FaTrash /> Delete Staff
+                </button>
+              )}
+
+              <button onClick={closeAllModals} className="logoutContainer6" style={{ padding: '8px', marginTop: '5px', cursor: 'pointer' }}>
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* MODAL 1: Confirmation */}
       {showDeleteModal && (
@@ -320,7 +368,7 @@ const filteredStaff = Staffdata ? Staffdata.filter((staff) => {
         </div>
       )}
 
-      {/* [NEW CHANGE]: MODAL 3: Reactivate Confirmation Modal */}
+      {/* MODAL 3: Reactivate Confirmation Modal */}
       {showReactivateModal && (
         <div className="logoutContainer">
           <div className="logoutContainer1">

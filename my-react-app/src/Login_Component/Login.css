@@ -70,7 +70,13 @@ body {
   box-shadow: -10px 0 30px rgba(0, 0, 0, 0.02);
   z-index: 2;
 }
+.formContainer h3 {
+  color: #0f172a !important;
+}
 
+[data-theme="dark"] .formContainer h3 {
+  color: #0f172a !important;
+}
 .formContainer h3 {
   font-size: 2rem;
   color: #0f172a;

@@ -45,12 +45,11 @@ function Dashboard() {
 
   const totalStaffCount = activeStaffList.length;
 
-  const uniqueDepartmentsCount = new Set(activeStaffList.map(staff => staff.Department)).size;
+  // const uniqueDepartmentsCount = new Set(activeStaffList.map(staff => staff.Department)).size;
 
   const oneYearAgo = new Date();
   oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1); 
 
-  // Pichle 1 saal me join karne wale staff ki list
   const oneYearJoinersList = activeStaffList.filter(staff => {
     if (!staff.Joining_Date) return false;
     const joiningDate = new Date(staff.Joining_Date);
@@ -59,7 +58,6 @@ function Dashboard() {
 
   const newJoinersCount = oneYearJoinersList.length;
 
-  // Table ke liye list (Naye se purane order me sort ki hui)
   const recentStaffs = [...oneYearJoinersList].sort(
     (a, b) => new Date(b.Joining_Date).getTime() - new Date(a.Joining_Date).getTime()
   );

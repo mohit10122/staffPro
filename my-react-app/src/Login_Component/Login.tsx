@@ -52,7 +52,7 @@ function LoginPage() {
             }
 
         })
-        .catch(error => {
+        .catch(()=> {
             toast.dismiss();
             toast.error("Something went wrong!", { autoClose: 4000 });
             

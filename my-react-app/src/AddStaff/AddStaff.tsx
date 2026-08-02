@@ -48,7 +48,7 @@ const [isSubmitting, setIsSubmitting] = useState(false);
       
         setPassword(text); 
       })
-      .catch(error => {
+      .catch(() => {
         toast.dismiss();
         toast.error("Something went wrong!", { autoClose: 4000 });
       });
@@ -109,7 +109,7 @@ const [isSubmitting, setIsSubmitting] = useState(false);
         
       }
     })
-    .catch(error => {
+    .catch(() => {
       toast.dismiss();
       toast.error("Something went wrong!", { autoClose: 4000 });
     })   .finally(() => {
