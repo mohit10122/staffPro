@@ -7,7 +7,7 @@ function Profile() {
    const staffId = localStorage.getItem("staffid");
 
    const fetchStaffData = () => {
-      fetch('http://localhost:8080/Api/Staff/getDetail', {
+      fetch('https://staffpro.onrender.com/Api/Staff/getDetail', {
          method: 'POST',
          headers: {
             'Content-Type': 'application/json',

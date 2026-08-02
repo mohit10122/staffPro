@@ -18,7 +18,7 @@ function LoginPage() {
           if (isSubmitting) return; 
     setIsSubmitting(true);
  toast.dismiss();
-        fetch('http://localhost:8080/Api/Staff/login', {
+        fetch('https://staffpro.onrender.com/Api/Staff/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

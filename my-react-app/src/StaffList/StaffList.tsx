@@ -37,7 +37,7 @@ function StaffsList() {
   };
 
   const fetchStaffData = () => {
-    fetch('http://localhost:8080/Api/Staff/getDetail', {
+    fetch('https://staffpro.onrender.com/Api/Staff/getDetail', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -94,7 +94,7 @@ function StaffsList() {
       return;
     }
 
-    fetch('http://localhost:8080/Api/Staff/deleteStaff', {
+    fetch('https://staffpro.onrender.com/Api/Staff/deleteStaff', {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -132,7 +132,7 @@ function StaffsList() {
   };
 
   const handleFinalReactivate = () => {
-    fetch('http://localhost:8080/Api/Staff/deleteStaff', { 
+    fetch('https://staffpro.onrender.com/Api/Staff/deleteStaff', { 
       method: 'Delete', 
       headers: {
         'Content-Type': 'application/json',

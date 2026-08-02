@@ -38,7 +38,7 @@ const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     if (isupdateStaff && StaffId) {
-      fetch('http://localhost:8080/Api/Staff/bindPassword', {
+      fetch('https://staffpro.onrender.com/Api/Staff/bindPassword', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ StaffID: StaffId, Flag: "getPassword" })
@@ -64,8 +64,8 @@ const [isSubmitting, setIsSubmitting] = useState(false);
     setIsSubmitting(true);
     toast.dismiss();
     const endpoint = isupdateStaff 
-      ? 'http://localhost:8080/Api/Staff/update' 
-      : 'http://localhost:8080/Api/Staff/save';
+      ? 'https://staffpro.onrender.com/Api/Staff/update' 
+      : 'https://staffpro.onrender.com/Api/Staff/save';
       
     const method = isupdateStaff ? 'PUT' : 'POST';
     const flagValue = isupdateStaff ? "UpdateStaff" : "saveStaffDetail";
