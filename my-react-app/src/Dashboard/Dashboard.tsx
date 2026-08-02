@@ -58,7 +58,6 @@ function Dashboard() {
 
   const newJoinersCount = oneYearJoinersList.length;
 
-  // Yahan sorting date ki jagah StaffID ke descending order (bade se chhota) par kar di hai
   const recentStaffs = [...oneYearJoinersList].sort(
     (a, b) => Number(b.StaffID) - Number(a.StaffID)
   );

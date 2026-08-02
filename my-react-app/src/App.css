@@ -12,7 +12,7 @@
   --bg-primary: #0f172a;
   --text-main: #f1f5f1;
   --card-bg: #1e293b;
-  --table-header-bg: #1e293b;
+  --table-header-bg: #111827;
   --table-header-text: #38bdf8;
   --table-row-hover: #273548;
   --border-color: #334155;
@@ -69,7 +69,7 @@ td {
    padding: 12px; 
 }.staff-table td, 
 table td {
-  border-bottom: 1px solid #94a3b8 !important; /* Yaha color dark kar diya hai taaki saaf dikhe */
+  border-bottom: 1px solid #94a3b8 !important; 
 }
 
 .staff-table th, 

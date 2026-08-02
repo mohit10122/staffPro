@@ -87,7 +87,6 @@
   position: relative;
   overflow-y: auto;  
   overflow-x: auto;
-  max-height: 65vh;   
 
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -157,7 +156,7 @@
   border-color: #334155 !important;
 }
 [data-theme="dark"] .table-wrapper th {
-  background-color: #1e293b !important;
+  /* background-color: #1e293b !important; */
   color: #38bdf8 !important;
 }
 [data-theme="dark"] .table-wrapper td {
@@ -167,7 +166,7 @@
 [data-theme="dark"] .table-wrapper th:nth-child(1),
 [data-theme="dark"] .table-wrapper th:nth-child(2),
 [data-theme="dark"] .table-wrapper th:nth-child(3) {
-  background-color: #1e293b !important;
+  background-color: #111827 !important;
 }
 [data-theme="dark"] .table-wrapper td:nth-child(1),
 [data-theme="dark"] .table-wrapper td:nth-child(2),
