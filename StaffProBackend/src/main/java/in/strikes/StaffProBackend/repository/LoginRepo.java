@@ -12,12 +12,11 @@ import java.time.LocalDate;
 @Repository
 public interface LoginRepo extends JpaRepository<Login_detail, Integer> {
 
-    @Query(value = "EXEC dbo.sp_CheckLogin :email, :password", nativeQuery = true)
-ResponseDTO checkLoginViaSP(
-        @Param("email") String email,
-        @Param("password") String password
-);
-
+    @Query(value = "SELECT * FROM checklogin(:email, :password)", nativeQuery = true)
+    ResponseDTO checkLoginViaSP(
+            @Param("email") String email,
+            @Param("password") String password
+    );
 
 
 }

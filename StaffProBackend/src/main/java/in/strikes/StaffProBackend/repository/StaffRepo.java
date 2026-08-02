@@ -1,6 +1,5 @@
 package in.strikes.StaffProBackend.repository;
 
-import in.strikes.StaffProBackend.dto.ResponseDTO;
 import in.strikes.StaffProBackend.entity.Staff_Details;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,9 +14,11 @@ import java.util.List;
 
 @Repository
 public interface StaffRepo extends JpaRepository<Staff_Details, Integer> {
-    @Query(value = "EXEC dbo.sp_StaffDetail @Flag = :flag, @StaffID = :staffId", nativeQuery = true)
+
+    @Query(value = "SELECT * FROM staffdetail(:flag, :staffId)", nativeQuery = true)
     List<Staff_Details> getStaffByStoredProcedure(@Param("flag") String flag, @Param("staffId") int staffId);
-    @Query(value = "EXEC dbo.sp_StaffDetail @Flag = :flag, @StaffID = :staffId", nativeQuery = true)
+
+    @Query(value = "SELECT getpassword(:flag, :staffId)", nativeQuery = true)
     String getPasswordSP(@Param("flag") String flag, @Param("staffId") int staffId);
 
     @Modifying(clearAutomatically = true, flushAutomatically = true)
@@ -27,23 +28,9 @@ public interface StaffRepo extends JpaRepository<Staff_Details, Integer> {
             @Param("active") Character active,
             @Param("leavingDate") LocalDate leavingDate
     );
+
     @Transactional
-    @Query(value = "DECLARE @OutID INT, @OutMsg VARCHAR(100); " +
-            "EXEC dbo.sp_SAveStaffDetail " +
-            "@Active = :active, " +
-            "@Flag = :flag, " +
-            "@StaffID = @OutID OUTPUT, " +
-            "@Department = :department, " +
-            "@StaffName = :staffName, " +
-            "@Email = :email, " +
-            "@Joining_Date = :joiningDate, " +
-            "@Phoneno = :phoneno, " +
-            "@Salary = :salary, " +
-            "@Password = :password, " +
-            "@Permanent_address = :permanentAddress, " +
-            "@Repeat = @OutMsg OUTPUT; " +
-            "SELECT @OutMsg;",
-            nativeQuery = true)
+    @Query(value = "SELECT * FROM savestaffdetail(:active, :flag, NULL, :department, :staffName, :email, :joiningDate, :phoneno, :salary, :password, :permanentAddress)", nativeQuery = true)
     String saveStaffAndLoginViaSP(
             @Param("flag") String flag,
             @Param("active") Character active,
@@ -52,28 +39,13 @@ public interface StaffRepo extends JpaRepository<Staff_Details, Integer> {
             @Param("email") String email,
             @Param("joiningDate") LocalDate joiningDate,
             @Param("phoneno") String phoneno,
-            @Param("salary")BigDecimal  salary,
+            @Param("salary") BigDecimal salary,
             @Param("password") String password,
             @Param("permanentAddress") String permanentAddress
     );
+
     @Transactional
-    @Query(value = "DECLARE @OutID INT, @OutMsg VARCHAR(100); " +
-            "SET @OutID = :staffId; " +
-            "EXEC dbo.sp_SAveStaffDetail " +
-            "@Active = :active, " +
-            "@Flag = :flag, " +
-            "@StaffID = @OutID OUTPUT, " +
-            "@Department = :department, " +
-            "@StaffName = :staffName, " +
-            "@Email = :email, " +
-            "@Joining_Date = :joiningDate, " +
-            "@Phoneno = :phoneno, " +
-            "@Salary = :salary, " +
-            "@Password = :password, " +
-            "@Permanent_address = :permanentAddress, " +
-            "@Repeat = @OutMsg OUTPUT; " +
-            "SELECT @OutMsg;",
-            nativeQuery = true)
+    @Query(value = "SELECT * FROM savestaffdetail(:active, :flag, :staffId, :department, :staffName, :email, :joiningDate, :phoneno, :salary, :password, :permanentAddress)", nativeQuery = true)
     String updateStaffSP(
             @Param("flag") String flag,
             @Param("staffId") Integer staffId,

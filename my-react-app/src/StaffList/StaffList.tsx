@@ -74,7 +74,7 @@ function StaffsList() {
       staff.Phoneno?.includes(query) ||
       staff.Department?.toLowerCase().includes(query) 
     );
-  }) : [];
+  }).sort((a, b) => Number(a.StaffID) - Number(b.StaffID)) : []; // Yahan StaffID ke ascending order mein sort kar diya hai (2, 9, 23, 55)
 
   const handleDeleteInit = (id: number, name: String, department: String) => {
     setDeleteId(id);
