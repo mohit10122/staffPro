@@ -289,11 +289,12 @@
 } 
 
 .staff-id-cell {
+  text-align: center; 
+}
+
+.staff-id-content {
   display: flex;
-  align-items: center;
   gap: 8px;
-  width: 100%;
-  box-sizing: border-box;
 }
 
 .icon-placeholder {

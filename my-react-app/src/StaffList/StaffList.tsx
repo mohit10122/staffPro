@@ -239,14 +239,16 @@ function StaffsList() {
                   style={{ cursor: department === "Admin" ? 'pointer' : 'default' }}
                 >
                   <td className="staff-id-cell">
+                    <div className="staff-id-content">
                     <span className="icon-placeholder">
                       {staff.Active === 'n' && (
                         <span title="Deleted Staff" style={{ color: '#ef4444', display: 'inline-flex', alignItems: 'center' }}>
-                          <FaTrash size={11} />
+                          <FaTrash size={9} />
                         </span>
+                        
                       )}
                     </span>
-                    <span>{staff.StaffID}</span>
+                    <span>{staff.StaffID}</span></div>
                   </td>
                   <td>{staff.StaffName}</td>
                   <td>{staff.Email}</td>
