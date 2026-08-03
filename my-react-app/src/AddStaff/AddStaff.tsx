@@ -251,7 +251,7 @@ const [isSubmitting, setIsSubmitting] = useState(false);
                   className="form-input"  
                   placeholder="enter your password" 
                   value={Password} 
-                  autoComplete="current-password"
+                  autoComplete="new-password"
                   onChange={(e) => setPassword(e.target.value)} 
                   minLength={4} 
                   required 
