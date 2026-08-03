@@ -74,7 +74,7 @@ function StaffsList() {
       staff.Phoneno?.includes(query) ||
       staff.Department?.toLowerCase().includes(query) 
     );
-  }).sort((a, b) => Number(a.StaffID) - Number(b.StaffID)) : []; // Yahan StaffID ke ascending order mein sort kar diya hai (2, 9, 23, 55)
+  }).sort((a, b) => Number(a.StaffID) - Number(b.StaffID)) : []; 
 
   const handleDeleteInit = (id: number, name: String, department: String) => {
     setDeleteId(id);
@@ -179,7 +179,16 @@ function StaffsList() {
     setSelectedStaff(null);
   };
 
-  if (loading) return <h2>Loading Staff Data...</h2>;
+ if (loading) return (
+  <h2 style={{ marginLeft: '60px' }}>
+    Loading Staff Data
+    <span className="loading-dots">
+      <span>.</span>
+      <span>.</span>
+      <span>.</span>
+    </span>
+  </h2>
+);
 
   return (
     <div className="Staffs-container">

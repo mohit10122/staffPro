@@ -62,7 +62,14 @@ function Dashboard() {
     (a, b) => Number(b.StaffID) - Number(a.StaffID)
   );
 
-  if (loading) return <h2>Loading Dashboard...</h2>;
+  if (loading) return <h2 style={{ marginLeft: '60px' }}>
+    Loading Dashboard Data
+    <span className="loading-dots">
+      <span>.</span>
+      <span>.</span>
+      <span>.</span>
+    </span>
+  </h2>;
 
   return (
     <div className="dashboardContainer">

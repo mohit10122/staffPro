@@ -74,7 +74,14 @@ function Profile() {
    };
 
    if (!profileData) {
-      return <div className="profile-container"><p>Loading profile...</p></div>;
+      return <h2 style={{ marginLeft: '60px' }}>
+    Loading Profile Data
+    <span className="loading-dots">
+      <span>.</span>
+      <span>.</span>
+      <span>.</span>
+    </span>
+  </h2>;
    }
 
    return (
