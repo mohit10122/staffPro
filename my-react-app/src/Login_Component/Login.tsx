@@ -31,7 +31,7 @@ function LoginPage() {
         .then(async response => {
             const data = await response.json();
             const message = data.Message || "";
-        
+        localStorage.setItem("token", data.token);
             const lowerText = message.toLowerCase();
              toast.dismiss();
             if (lowerText.includes("exist") || lowerText.includes("deleted") || lowerText.includes("invalid")) {

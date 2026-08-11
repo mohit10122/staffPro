@@ -10,7 +10,7 @@ function AddStaff() {
 
   const [PasswordVisibility, setPasswordVisiblity] = useState(true);
   
-
+ const [AllDepartment,setAllDepartment] = useState<any[] | null>(null);
   const [StaffId, setStaffId] = useState<number | string>(""); 
   const [StaffName, setStaffName] = useState("");
   const [Phoneno, setPhoneno] = useState<string | null>("");
@@ -37,28 +37,28 @@ const [isSubmitting, setIsSubmitting] = useState(false);
   }, [isupdateStaff, matchedStaff]);
 
   useEffect(() => {
-    if (isupdateStaff && StaffId) {
-      fetch('https://staffpro.onrender.com/Api/Staff/bindPassword', {
+   
+    
+      fetch('https://staffpro.onrender.com/Api/Staff/getDepartment', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ StaffID: StaffId, Flag: "getPassword" })
+        body: JSON.stringify({  Flag: "get_Departments" })
       })
-      .then(async response => {
-        const text = await response.text();
-      
-        setPassword(text); 
-      })
-      .catch(() => {
-        toast.dismiss();
-        toast.error("Something went wrong!", { autoClose: 4000 });
-      });
-    }
-  }, [isupdateStaff, StaffId]);
-
-  const isFormValid = StaffName && Phoneno && Email && Department && Salary && Joining_Date && Password;
-
+    .then(response => response.json())
+    .then(data => {
+     
+      setAllDepartment(data);
+   
+    })
  
+    }, []);
+  
+
+  const isSaveFormValid = Boolean(StaffName && Phoneno && Email && Department && Salary && Joining_Date && Password);
+const isUpdateFormValid = Boolean(StaffName && Phoneno && Email && Department && Salary && Joining_Date);
+ const isFormValid = isupdateStaff ? isUpdateFormValid : isSaveFormValid;
   const handleSubmitForm = (e: React.FormEvent) => {
+    const token = localStorage.getItem("token");
     e.preventDefault(); 
     if (isSubmitting) return;
     setIsSubmitting(true);
@@ -86,7 +86,7 @@ const [isSubmitting, setIsSubmitting] = useState(false);
 
     fetch(endpoint, {
       method: method,
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json' ,'Authorization': 'Bearer ' + token},
       body: JSON.stringify(payload)
     })
     .then(async response => {
@@ -189,14 +189,12 @@ const [isSubmitting, setIsSubmitting] = useState(false);
                 required
               >
                 <option value="">Please choose a department</option>
-                <option value="Admin">Admin</option>
-                <option value="Backend Developer">Java Developer</option>
-                <option value="Frontend Developer">Frontend Developer</option>
-                <option value="Full Stack Developer">Full Stack Developer</option>
-                <option value="QA / Testing">QA / Testing</option>
-                <option value="HR">HR</option>
-                <option value="Project Manager / TL">Project Manager / TL</option>
-                <option value="Finance">Finance</option>
+                {AllDepartment && AllDepartment.map((dept, index) => (
+      <option key={index} >
+        {dept.Department}
+      </option>
+    ))}
+             
               </select>
             </div>
 
@@ -244,17 +242,17 @@ const [isSubmitting, setIsSubmitting] = useState(false);
             </div>
 
             <div className="form-group">
-              <label>Password</label>
+              <label>Password {isupdateStaff && "(Optional - Leave empty to keep existing password)"}</label>
               <div className="password-input-wrapper">
                 <input 
                   type={PasswordVisibility ? 'password' : 'text'} 
                   className="form-input"  
-                  placeholder="enter your password" 
+                  placeholder={isupdateStaff ? "Leave blank to keep old password" : "enter your password"}
                   value={Password} 
                   autoComplete="new-password"
                   onChange={(e) => setPassword(e.target.value)} 
-                  minLength={4} 
-                  required 
+                  minLength={!isupdateStaff || Password.length > 0 ? 4 : undefined}
+                  required={!isupdateStaff}
                 />
                 <span className="password-toggle-icon" onClick={() => setPasswordVisiblity(!PasswordVisibility)}>
                   {PasswordVisibility ? <FaEyeSlash /> : <FaEye />}

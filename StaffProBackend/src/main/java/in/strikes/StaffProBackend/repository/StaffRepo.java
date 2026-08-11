@@ -15,16 +15,13 @@ import java.util.List;
 @Repository
 public interface StaffRepo extends JpaRepository<Staff_Details, Integer> {
 
-    @Query(value = "SELECT * FROM staffdetail(:flag, :staffId)", nativeQuery = true)
-    List<Staff_Details> getStaffByStoredProcedure(@Param("flag") String flag, @Param("staffId") int staffId);
-
-    @Query(value = "SELECT getpassword(:flag, :staffId)", nativeQuery = true)
-    String getPasswordSP(@Param("flag") String flag, @Param("staffId") int staffId);
+    @Query(value = "SELECT * FROM staffdetail(:flag, :staffid)", nativeQuery = true)
+    List<Staff_Details> getStaffByStoredProcedure(@Param("flag") String flag, @Param("staffid") int staffid);
 
     @Modifying(clearAutomatically = true, flushAutomatically = true)
-    @Query("UPDATE Staff_Details s SET s.Active = :active, s.Leaving_date = :leavingDate WHERE s.StaffID = :staffId")
+    @Query("UPDATE Staff_Details s SET s.Active = :active, s.Leaving_date = :leavingDate WHERE s.StaffID = :staffid")
     int updateActiveAndLeavingDate(
-            @Param("staffId") Integer staffId,
+            @Param("staffid") Integer staffid,
             @Param("active") Character active,
             @Param("leavingDate") LocalDate leavingDate
     );
@@ -45,10 +42,10 @@ public interface StaffRepo extends JpaRepository<Staff_Details, Integer> {
     );
 
     @Transactional
-    @Query(value = "SELECT * FROM savestaffdetail(:active, :flag, :staffId, :department, :staffName, :email, :joiningDate, :phoneno, :salary, :password, :permanentAddress)", nativeQuery = true)
+    @Query(value = "SELECT * FROM savestaffdetail(:active, :flag, :staffid, :department, :staffName, :email, :joiningDate, :phoneno, :salary, :password, :permanentAddress)", nativeQuery = true)
     String updateStaffSP(
             @Param("flag") String flag,
-            @Param("staffId") Integer staffId,
+            @Param("staffid") Integer staffid,
             @Param("active") Character active,
             @Param("department") String department,
             @Param("staffName") String staffName,

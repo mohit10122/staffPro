@@ -5,17 +5,20 @@ import in.strikes.StaffProBackend.dto.ResponseDTO;
 import in.strikes.StaffProBackend.entity.Department_Table;
 import in.strikes.StaffProBackend.entity.Login_detail;
 import in.strikes.StaffProBackend.entity.Staff_Details;
+import in.strikes.StaffProBackend.repository.DepartmentRepo;
 import in.strikes.StaffProBackend.repository.LoginRepo;
 import in.strikes.StaffProBackend.repository.StaffRepo;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class StaffService {
@@ -28,11 +31,72 @@ public class StaffService {
 
     @Autowired
     private LoginRepo loginRepo;
-
-   public StaffService(StaffRepo staffrepo){
+    @Autowired
+    private DepartmentRepo departmentRepo;
+    private final AuthenticationManager authenticationManager;
+    private final JwtService jwtService;
+   public StaffService(StaffRepo staffrepo, AuthenticationManager authenticationManager, JwtService jwtService){
        this.staffrepo = staffrepo;
+       this.authenticationManager=authenticationManager;
+       this.jwtService=jwtService;
    }
 
+    public Map<String, Object> loginUser(String email, String password) {
+        Map<String, Object> responseMap = new HashMap<>();
+
+
+        Optional<Login_detail> userOpt = loginRepo.findByEmail(email);
+        if (userOpt.isEmpty()) {
+            responseMap.put("StaffID", 0);
+            responseMap.put("Message", "User does not exist");
+            return responseMap;
+        }
+
+        Login_detail user = userOpt.get();
+
+        if (!user.getPassword().equals(password)) {
+            responseMap.put("StaffID", 0);
+            responseMap.put("Message", "Invalid password");
+            return responseMap;
+        }
+
+        Staff_Details staffInfo = staffrepo.findById(user.getStaffID()).orElse(null);
+
+        if (staffInfo != null && staffInfo.getActive() != null && (staffInfo.getActive() == 'n' || staffInfo.getActive() == 'N')) {
+            responseMap.put("StaffID", 0);
+            responseMap.put("Message", "Your account has been deleted");
+            return responseMap;
+        }
+
+
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(email, password)
+        );
+
+
+        String departmentName = "User";
+
+        if (staffInfo != null && staffInfo.getDepartment() != null) {
+            // Agar DB se aaya department "Admin" ya "admin" hai
+            if (staffInfo.getDepartment().equalsIgnoreCase("Admin")) {
+                departmentName = "Admin";
+            }
+        }
+
+        String role = "ROLE_" + departmentName;
+
+        String token = jwtService.generateToken(user.getEmail(), role);
+
+
+        responseMap.put("StaffID", user.getStaffID());
+
+        responseMap.put("StaffName", user.getStaffName());
+        responseMap.put("Department", departmentName);
+        responseMap.put("Message", "success");
+        responseMap.put("token", token);
+
+        return responseMap;
+    }
     public List<ResponseDTO> StaffServ(RequestDTO req){
         Staff_Details sd =new Staff_Details();
         sd.setStaffID(req.getStaffID());
@@ -115,25 +179,12 @@ public class StaffService {
         return res.getMessage();
     }
 
-    public ResponseDTO loginService(RequestDTO req){
-       Login_detail log =new Login_detail();
-       log.setEmail(req.getEmail());
-        log.setPassword(req.getPassword());
+    public List<Department_Table>  GetDepartmantService(RequestDTO req){
 
-        ResponseDTO res = loginRepo.checkLoginViaSP(
-                log.getEmail(),
-                log.getPassword()
-        );
-
-        return res;
-    }
-    public String  passwdService(RequestDTO req){
-        Staff_Details sd =new Staff_Details();
-        sd.setStaffID(req.getStaffID());
         String flag= req.getFlag();
-        String password =staffrepo.getPasswordSP( flag ,sd.getStaffID());
+        List<Department_Table>departments=departmentRepo.getDepartment( flag );
 
-        return password;
+        return departments;
 
     }
     public String UpdateService(RequestDTO req){

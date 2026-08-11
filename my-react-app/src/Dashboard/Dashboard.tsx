@@ -2,6 +2,7 @@ import './Dashboard.css';
 import { useState, useEffect } from 'react';
 
 function Dashboard() {
+  const [AllDepartment,setAllDepartment] = useState<any[] | null>(null);
   const [Staffdata, setData] = useState<any[] | null>(null);
   const [loading, setLoading] = useState(true);
   const staffId = localStorage.getItem("staffid");
@@ -27,6 +28,23 @@ function Dashboard() {
       setLoading(false);
     });
   };
+
+    useEffect(() => {
+   
+    
+      fetch('https://staffpro.onrender.com/Api/Staff/getDepartment', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({  Flag: "get_Departments" })
+      })
+    .then(response => response.json())
+    .then(data => {
+     
+      setAllDepartment(data);
+   
+    })
+ 
+    }, []);
 
   useEffect(() => {
     fetchStaffData();
@@ -81,7 +99,9 @@ function Dashboard() {
 
         <div className="TotalDepartment stat-card">
           <h5>Departments</h5>
-          <p>8</p>
+         <p>
+   {AllDepartment?.length ?? 0}
+  </p>
         </div>
 
         <div className="NewJoiners stat-card">

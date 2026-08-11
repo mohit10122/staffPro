@@ -1,11 +1,15 @@
 package in.strikes.StaffProBackend.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "department_table")
 public class Department_Table {
 
+    @Column(name = "department")
     private String Department;
 
     public String getDepartment() {
@@ -25,5 +29,6 @@ public class Department_Table {
     }
 
     @Id
+    @Column(name = "departmentid")
     private Integer DepartmentID;
 }

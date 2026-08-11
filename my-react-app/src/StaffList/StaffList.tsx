@@ -93,11 +93,12 @@ function StaffsList() {
       alert("Please select a leaving date.");
       return;
     }
-
+ const token = localStorage.getItem("token");
     fetch('https://staffpro.onrender.com/Api/Staff/deleteStaff', {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
+         'Authorization': 'Bearer ' + token
       },
       body: JSON.stringify({
         StaffID: deleteId,
@@ -132,10 +133,12 @@ function StaffsList() {
   };
 
   const handleFinalReactivate = () => {
+    const token = localStorage.getItem("token");
     fetch('https://staffpro.onrender.com/Api/Staff/deleteStaff', { 
       method: 'Delete', 
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
       },
       body: JSON.stringify({
         StaffID: reactivateId,

@@ -3,9 +3,12 @@ package in.strikes.StaffProBackend.staffController;
 import in.strikes.StaffProBackend.Service.StaffService;
 import in.strikes.StaffProBackend.dto.RequestDTO;
 import in.strikes.StaffProBackend.dto.ResponseDTO;
+import in.strikes.StaffProBackend.entity.Department_Table;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("Api/Staff")
@@ -20,7 +23,7 @@ public class StaffController {
     public List<ResponseDTO> getStaff(@RequestBody RequestDTO req){
         List<ResponseDTO> res= res=service.StaffServ(req);
 
-//        System.out.println("hello"+req.getStaffID());
+//        System.out.println("hello"+req.getStaffid());
 
         return res;
     }
@@ -37,16 +40,17 @@ public class StaffController {
 return message;
     }
     @PostMapping("login")
-    public ResponseDTO loginController(@RequestBody RequestDTO req){
-
-        ResponseDTO res = service.loginService(req);
-        return res;
+    public ResponseEntity<Map<String, Object>> loginController(@RequestBody RequestDTO req){
+        String email = req.getEmail();
+        String password = req.getPassword();
+        Map<String, Object> response = service.loginUser(email, password);
+        return ResponseEntity.ok(response);
     }
-    @PostMapping("bindPassword")
-    public String passwdController(@RequestBody RequestDTO req){
+    @PostMapping("getDepartment")
+    public List<Department_Table> departmentController(@RequestBody RequestDTO req){
 
-        String password = service.passwdService(req);
-        return password;
+         List<Department_Table>departments = service.GetDepartmantService(req);
+        return departments;
     }
     @PutMapping("update")
     public String UpdateController(@RequestBody RequestDTO req){

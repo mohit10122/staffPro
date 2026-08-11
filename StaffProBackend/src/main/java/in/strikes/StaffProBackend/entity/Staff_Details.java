@@ -5,17 +5,27 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
+@Table(name = "staff_details")
 public class Staff_Details {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "staffid")
     private Integer StaffID ;
+    @Column(name = "staff_name")
     private String StaffName ;
+    @Column(name = "phoneno")
     private String Phoneno ;
+    @Column(name = "email")
     private String Email ;
+    @Column(name = "department")
     private String Department;
-
-    @Column(precision = 13, scale = 2)
+    @Column(name = "active")
+    private Character Active ;
+    @Column(name = "leaving_date")
+    private LocalDate Leaving_date ;
+    @Column(name="salary",precision = 13, scale = 2)
     private BigDecimal Salary ;
+    @Column(name = "joining_date")
     private LocalDate Joining_Date ;
     public String getPermanent_address() {
         return Permanent_address;
@@ -24,7 +34,7 @@ public class Staff_Details {
     public void setPermanent_address(String permanent_address) {
         Permanent_address = permanent_address;
     }
-
+    @Column(name = "permanent_address")
     private String Permanent_address;
 
     public Integer getStaffID() {
@@ -93,9 +103,6 @@ public class Staff_Details {
 
 
 
-    private Character Active ;
-
-    private LocalDate Leaving_date ;
 
     public LocalDate getLeaving_date() {
         return Leaving_date;

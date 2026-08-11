@@ -1,25 +1,34 @@
 package in.strikes.StaffProBackend.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import in.strikes.StaffProBackend.Role;
+import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+import java.util.List;
 
 @Entity
-public class Login_detail {
+@Table(name = "login_detail")
+public class Login_detail implements UserDetails {
 
     @Id
+    @Column(name = "staffid")
     private Integer StaffID;
+    @Column(name = "staff_name")
     private String StaffName;
+    @Column(name = "email",unique = true, nullable = false)
     private String Email;
+    @Column(name = "password")
     private String Password;
+
+    public void setStaffID(Integer staffID) {
+        StaffID = staffID;
+    }
 
     public Integer getStaffID() {
         return StaffID;
-    }
-
-    public void setStaffID(int staffID) {
-        StaffID = staffID;
     }
 
     public String getStaffName() {
@@ -29,7 +38,7 @@ public class Login_detail {
     public void setStaffName(String staffName) {
         StaffName = staffName;
     }
-
+    @Override
     public String getPassword() {
         return Password;
     }
@@ -45,5 +54,28 @@ public class Login_detail {
     public void setPassword(String password) {
         Password = password;
     }
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        // Ye security ko batayega ki iska role kya hai (eg. ROLE_ADMIN)
+        return List.of(new SimpleGrantedAuthority("ROLE_User"));
+    }
+
+    @Override
+    public String getUsername() {
+        return Email; // Hum Email se login karwayenge, toh username ki jagah Email return kiya
+    }
+
+    // Niche wale sabhi ko 'true' rakhna zaroori hai, warna Spring login block kar dega
+    @Override
+    public boolean isAccountNonExpired() { return true; }
+
+    @Override
+    public boolean isAccountNonLocked() { return true; }
+
+    @Override
+    public boolean isCredentialsNonExpired() { return true; }
+
+    @Override
+    public boolean isEnabled() { return true; }
 
 }
