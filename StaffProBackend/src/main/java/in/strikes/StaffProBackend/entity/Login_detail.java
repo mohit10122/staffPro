@@ -62,10 +62,10 @@ public class Login_detail implements UserDetails {
 
     @Override
     public String getUsername() {
-        return Email; // Hum Email se login karwayenge, toh username ki jagah Email return kiya
+        return Email;
     }
 
-    // Niche wale sabhi ko 'true' rakhna zaroori hai, warna Spring login block kar dega
+
     @Override
     public boolean isAccountNonExpired() { return true; }
 
