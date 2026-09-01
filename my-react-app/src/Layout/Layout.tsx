@@ -14,6 +14,7 @@ const titleLocation = useLocation();
     if (titleLocation.pathname === "/addStaff") return "Add Staff";
     if (titleLocation.pathname === "/updateStaff") return "Update Staff";
     if (titleLocation.pathname === "/profile") return "Your Profile";
+    if (titleLocation.pathname === "/apply") return "Start your Application";
        return "Dashboard";
   }
   return (

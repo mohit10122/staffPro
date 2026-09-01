@@ -56,7 +56,7 @@ public class Login_detail implements UserDetails {
     }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // Ye security ko batayega ki iska role kya hai (eg. ROLE_ADMIN)
+
         return List.of(new SimpleGrantedAuthority("ROLE_User"));
     }
 

@@ -23,11 +23,12 @@ function LogoForDashboard(){
     <h1><span style={{ color: '#2563eb' }}>Staff</span>
     <span style={{ color: '#10b981' }}>Pro</span></h1>
     </div>
-        <div className="UserName">
-    <FaUserCircle size={30} />
-    
-    <span>{staffName}</span>
+       {!['/apply', '/login', '/'].includes(location.pathname) && (
+    <div className="UserName">
+        <FaUserCircle size={30} />
+        <span>{staffName}</span>
     </div>
+)}
     </div>
    
     </div>

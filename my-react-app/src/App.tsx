@@ -8,8 +8,10 @@ import Dashboard from "./Dashboard/Dashboard";
 import StaffList from "./StaffList/StaffList";
 import AddStaff from "./AddStaff/AddStaff";
 import Profile from "./Profile/Profile";
+import Resume from "./Resume_detection/Resume";
 import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
+
 function App(){
 return(
   <>
@@ -27,7 +29,7 @@ return(
         <Route  path="profile" element={<Profile />} />
         <Route  path="addStaff" element={<AddStaff />} />
         <Route  path="updateStaff" element={<AddStaff />} />
-      
+        <Route  path="apply" element={<Resume />} />
       </Route>
     </Routes>
     </BrowserRouter>

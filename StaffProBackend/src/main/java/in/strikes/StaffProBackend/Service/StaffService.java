@@ -77,7 +77,7 @@ public class StaffService {
         String departmentName = "User";
 
         if (staffInfo != null && staffInfo.getDepartment() != null) {
-            // Agar DB se aaya department "Admin" ya "admin" hai
+
             if (staffInfo.getDepartment().equalsIgnoreCase("Admin")) {
                 departmentName = "Admin";
             }

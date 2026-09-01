@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function LoginPage() {
+    const ResumeNavigate= useNavigate();
     const navigateDashBoard = useNavigate();
     const [SendPassword, setSendPassword] = useState("");
     const [Email, setEmail] = useState("");
@@ -109,6 +110,24 @@ function LoginPage() {
 </button>
                     </div>
                 </form>
+                <div style={{ marginTop: '30px', textAlign: 'center', borderTop: '1px solid #eee', paddingTop: '20px' }}>
+                    <p style={{ margin: '10px 0', 
+                        color: '#666', 
+                        fontWeight: 'bold', 
+                        textDecoration: 'none', 
+                        cursor: 'default',
+                        pointerEvents: 'none' }}>Want to join our company?</p>
+                    <button 
+                        type="button"
+                        onClick={() => ResumeNavigate('/apply')} 
+                        style={{
+                            padding: '10px 20px', backgroundColor: '#28a745', color: '#fff',
+                            border: 'none', borderRadius: '5px', cursor: 'pointer', width: '100%'
+                        }}
+                    >
+                        Apply for Current Openings
+                    </button>
+                </div>
             </div>
         </div>
         </>

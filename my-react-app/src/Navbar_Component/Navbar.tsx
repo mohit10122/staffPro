@@ -22,7 +22,9 @@ function Navbar(){
         setlogoutState(false);
         navigate('/login');
     };
-
+if (location.pathname === '/apply' || location.pathname === '/login' || location.pathname === '/') {
+        return null;
+    }
     return (
         <div className='Navbar-Container'>
             <div>
