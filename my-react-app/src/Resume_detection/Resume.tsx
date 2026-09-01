@@ -55,7 +55,7 @@ function Resume() {
         try {
             toast.info("AI is analyzing your resume...", { autoClose: 2000 });
             
-            const response = await fetch("http://localhost:8000/analyze-resume", {
+            const response = await fetch("https://staffpro-ai.onrender.com/analyze-resume", {
                 method: "POST",
                 body: formData,
             });
@@ -99,7 +99,7 @@ function Resume() {
         setChatHistory(prev => [...prev, { sender: 'user', question: currentQuestion }]);
 
         try {
-            const response = await fetch("http://localhost:8000/ask-db", {
+            const response = await fetch("https://staffpro-ai.onrender.com/ask-db", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
