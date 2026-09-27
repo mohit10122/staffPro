@@ -41,7 +41,7 @@ function Resume() {
         e.preventDefault();
         
         if (!file || !position) {
-            toast.warning("Bhai, position aur resume dono select karna zaroori hai!", { autoClose: 3000 });
+            toast.warning("Select both position and resume file!", { autoClose: 3000 });
             return;
         }
 
@@ -66,8 +66,8 @@ function Resume() {
             setResult(data);
             toast.success("AI Analysis Complete!", { autoClose: 3000 });
         } catch (error) {
-            console.error("Error agaya:", error);
-            toast.error("FastAPI Backend se connect nahi ho paya. Server check karo.", { autoClose: 4000 });
+            
+            toast.error("FastAPI is not responding.", { autoClose: 4000 });
         } finally {
             setIsAnalyzing(false);
         }
@@ -110,11 +110,13 @@ function Resume() {
             const data = await response.json();
 
             if (!response.ok || data.error) {
+                
                 setChatHistory(prev => [...prev, { 
+                    
                     sender: 'ai', 
-                    error: data.error || "Something went wrong with the database query." 
+                    error: "I dont know the answer to that question. Please try asking something else.", 
                 }]);
-                toast.error(data.error || "Query blocked or failed!");
+               
             } else {
                 setChatHistory(prev => [...prev, { 
                     sender: 'ai', 
@@ -122,7 +124,7 @@ function Resume() {
                 }]);
             }
         } catch (error) {
-            console.error("Connection error:", error);
+            
             setChatHistory(prev => [...prev, { 
                 sender: 'ai', 
                 error: "Failed to connect to FastAPI backend server." 
